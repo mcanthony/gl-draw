@@ -50,10 +50,12 @@ class App extends React.Component { // eslint-disable-line
     req.open('GET', e.target.value);
     req.onload = () => {
       var data = JSON.parse(req.responseText);
-      Draw.clear();
-      Draw.set(data);
-      var ext = turf.extent(data);
-      map.fitBounds([[ext[0], ext[1]], [ext[2], ext[3]]]);
+      if (GJV.valid(data)) {
+        Draw.clear();
+        Draw.set(data);
+        var ext = turf.extent(data);
+        map.fitBounds([[ext[0], ext[1]], [ext[2], ext[3]]]);
+      }
     };
     req.send();
   }
